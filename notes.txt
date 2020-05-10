@@ -4,7 +4,6 @@ Mongo Database
 3. create schema
 4. create model and attached to schema
 
-
 REST - a mapping between HTTP routes and CRUD
 
 CREATE
@@ -16,14 +15,30 @@ RESTFUL ROUTES
 
 Name		Path		HTTP Verb	Purpose
 ==============================================================================
-Index		/dogs		GET		list all dogs
-New		/dogs/new	GET		show new dog form
-Create		/dogs		POST		create new dog and redirect
-Show		/dogs/:id	GET		show info about specific dog
+Index		/dogs		    GET		list all dogs
+New		    /dogs/new	    GET		show new dog form
+Create		/dogs		    POST	create new dog and redirect
+Show		/dogs/:id	    GET		show info about specific dog
 Edit		/dogs/:id/edit	GET		show edit form for one dog
-Update		/dogs/:id	PUT		update particular dog, redirect
-Destroy		/dogs/:id	DELETE		delete particular dog
+Update		/dogs/:id	    PUT		update particular dog, redirect
+Destroy		/dogs/:id	    DELETE	delete particular dog
 
 Method override module
 - HTML5 form does not support PUT and DELETE
 - method-override package allows overriding HTTP verb in form action path
+
+With Associations:
+NEW         /dogs/:id/comments/new      GET     new comment for particular dog
+CREATE      /dogs/:id/comments          POST    show comments for particular dog
+
+
+#Authentication
+
+#Intro to Auth
+- Tools
+    - Passport
+    - Passport Local
+    - Passport Local mongoose
+- Auth Flow
+- Sessions
+    - Express Sessions
