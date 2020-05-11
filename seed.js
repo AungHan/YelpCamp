@@ -28,25 +28,25 @@ function seedDB(){
        }
        console.log("removed campground!");
         // add some campgrounds
-        data.forEach(seed => {
-            Campground.create(seed, (err, newOne) => {
-                if(err){
-                    console.log(err);
-                }else{
-                    Comment.create({
-                        text: "I think therefore I am!",
-                        author: "Elon Musk"
-                    }, (err, newComment) => {
-                        if(err){
-                            console.log(err);
-                        }else{
-                            newOne.comments.push(newComment);
-                            newOne.save();
-                        }
-                    });
-                }
-            });
-        });
+        // data.forEach(seed => {
+        //     Campground.create(seed, (err, newOne) => {
+        //         if(err){
+        //             console.log(err);
+        //         }else{
+        //             Comment.create({
+        //                 text: "I think therefore I am!",
+        //                 author: "Elon Musk"
+        //             }, (err, newComment) => {
+        //                 if(err){
+        //                     console.log(err);
+        //                 }else{
+        //                     newOne.comments.push(newComment);
+        //                     newOne.save();
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
     });
 
 }

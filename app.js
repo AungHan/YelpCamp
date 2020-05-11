@@ -8,6 +8,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const passportLocalStrategy = require("passport-local-mongoose");
 const User = require("./models/user");
+const campgroundsRoutes = require("./routes/campgrounds");
+const commentRoutes = require("./routes/comments");
+const authRoutes = require("./routes/index");
 const app = express();
 
 const PORT = 3000;
@@ -41,138 +44,9 @@ app.use((req, res, next) => {
    next();
 });
 
-// Routings
-app.get("/", (req, res) => {
-    res.render("landing");
-});
-
-app.get("/campgrounds", (req, res) => {
-    // Get campgrounds from db
-    Campground.find({}, (err, allCampgrounds) => {
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/index", {
-                campgrounds: allCampgrounds,
-                currentUser: req.user
-            });
-        }
-    });
-});
-
-app.get("/campgrounds/new", isLoggedIn, (req, res) => {
-    res.render("campgrounds/new");
-});
-
-app.post("/campgrounds", isLoggedIn, (req, res) => {
-    Campground.create({
-        name: req.body.campName,
-        image: req.body.campImage,
-        description: req.body.campDescription
-    }, (err, campground) => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log("New campground inserted ...");
-            console.log(campground);
-        }
-    });
-    res.redirect("/campgrounds");
-});
-
-app.get("/campgrounds/:id", (req, res) => {
-    // find campground with provided id
-    Campground.findById(req.params.id)
-        .populate("comments")
-        .exec((err, foundCampground) => {
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/show", { campground: foundCampground});
-        }
-    });
-});
-
-// ======================
-// COMMENTS ROUTES
-// ======================
-
-app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) => {
-    Campground.findById(req.params.id, (err, campground) => {
-        if(err){
-            console.log(err);
-        }    else{
-            res.render("comments/new", { campground: campground });
-        }
-    });
-
-});
-
-app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
-    Campground.findById(req.params.id, (err, campground) => {
-       if(err){
-           console.log(err);
-           res.redirect("/campgrounds");
-       } else{
-           // create new comment
-           Comment.create(req.body.comment, (err, newComment) => {
-               if(err){
-                   console.log(err);
-               }else{
-                   campground.comments.push(newComment);
-                   campground.save();
-                   res.redirect("/campgrounds/" + campground._id);
-               }
-           });
-       }
-    });
-});
-
-// AUTH ROUTE
-app.get("/register", (req, res) => {
-    res.render("register");
-});
-
-app.post("/register", (req, res) => {
-    User.register(new User({ username: req.body.username }),
-        req.body.password,
-        (err, user) => {
-            if(err){
-                console.log(err);
-                return res.redirect("/register");
-            }
-            passport.authenticate("local")(req, res, () => {
-                res.redirect("/campgrounds");
-            });
-        });
-});
-
-// show log in form
-app.get("/login", (req, res) => {
-   res.render("login");
-});
-
-app.post("/login",
-    passport.authenticate("local", {
-        successRedirect: "/campgrounds",
-        failureRedirect: "/login"
-    }),
-    (req, res) => {
-
-});
-
-// logout
-app.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect("/campgrounds");
-})
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
+app.use("/", authRoutes);
+app.use("/campgrounds", campgroundsRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
 
 app.listen(PORT, () => {
     console.log("server started at localhost:" + PORT);
