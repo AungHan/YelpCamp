@@ -1,0 +1,17 @@
+<%- include("partials/home") %>
+
+<h1>Sign up</h1>
+
+<form action="/register" method="POST">
+    <label>
+        Username
+        <input type="text" name="username" placeholder="username" required>
+    </label>
+    <label>
+        Password
+        <input type="password" name="password" placeholder="password" required>
+    </label>
+    <input type="submit">
+</form>
+
+<%- include("partials/footer") %>
