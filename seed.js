@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Campground = require("./models/campground");
 const Comment = require("./models/comment");
+const User = require("./models/user");
 
 const data = [
     {
@@ -27,6 +28,8 @@ function seedDB(){
            console.log(err);
        }
        console.log("removed campground!");
+       Comment.deleteMany({}, () => {});
+       User.deleteMany({}, () => {});
         // add some campgrounds
         // data.forEach(seed => {
         //     Campground.create(seed, (err, newOne) => {

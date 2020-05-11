@@ -24,11 +24,13 @@ router.get("/new", isLoggedIn, (req, res) => {
 
 // Campgrounds Create
 router.post("/", isLoggedIn, (req, res) => {
-    Campground.create({
+    let newCampground = {
         name: req.body.campName,
         image: req.body.campImage,
-        description: req.body.campDescription
-    }, (err, campground) => {
+        description: req.body.campDescription,
+        author: req.user
+    };
+    Campground.create(newCampground, (err, campground) => {
         if(err){
             console.log(err);
         }else{
