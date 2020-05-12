@@ -15,7 +15,7 @@ const methodOverride = require("method-override");
 const app = express();
 
 const PORT = 3000;
-//seedDb();
+// seedDb();
 
 // db configurations
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {
