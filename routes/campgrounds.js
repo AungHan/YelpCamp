@@ -55,6 +55,26 @@ router.get("/:id", (req, res) => {
         });
 });
 
+// Campgrounds Edit
+router.get("/:id/edit", (req, res) => {
+    Campground.findById(req.params.id, (error, foundCampground) => {
+       if(error){
+           res.redirect("/campgrounds");
+       } else{
+           res.render("campgrounds/edit", { campground: foundCampground});
+       }
+    });
+});
+
+router.put("/:id", (req, res) => {
+
+});
+
+// Campgrounds Delete
+router.delete("/:id", (req, res) => {
+
+});
+
 // Middle Ware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

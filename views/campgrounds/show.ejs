@@ -18,6 +18,7 @@
                     <h4><a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a></h4>
                     <p><%= campground.description %></p>
                     <p><em>By <%= campground.author.username %></em></p>
+                    <a href="/campgrounds/<%= campground._id %>/edit" role="button" class="btn btn-warning">Edit Campground</a>
                 </div>
             </div>
             <div class="well">

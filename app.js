@@ -11,6 +11,7 @@ const User = require("./models/user");
 const campgroundsRoutes = require("./routes/campgrounds");
 const commentRoutes = require("./routes/comments");
 const authRoutes = require("./routes/index");
+const methodOverride = require("method-override");
 const app = express();
 
 const PORT = 3000;
@@ -33,6 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
