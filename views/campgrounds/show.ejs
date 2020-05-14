@@ -38,7 +38,20 @@
                             <strong><%= comment.author.username %></strong>
                             <span class="pull-right">10 days ago</span>
                             <p><%= comment.text %></p>
-                        </div>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit"
+                                   role="button" class="btn btn-xs btn-warning">
+                                   Edit
+                                </a>
+                                <form id="delete-comment"
+                                      action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                      method="POST">
+                                    <button class="btn btn-xs btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            <% } %>
+                        </di
                     </div>
                 <% }); %>
             </div>
