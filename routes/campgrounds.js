@@ -43,7 +43,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 });
 
 // Campgrounds Show
-router.get("/:id", (req, res) => {
+router.get("/:id", middleware.isLoggedIn, (req, res) => {
     // find campground with provided id
     Campground.findById(req.params.id)
         .populate("comments")
