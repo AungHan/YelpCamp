@@ -12,6 +12,7 @@ const campgroundsRoutes = require("./routes/campgrounds");
 const commentRoutes = require("./routes/comments");
 const authRoutes = require("./routes/index");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 const app = express();
 
 const PORT = 3000;
@@ -35,6 +36,7 @@ app.use(passport.session());
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -43,6 +45,8 @@ passport.deserializeUser(User.deserializeUser());
 // middleware
 app.use((req, res, next) => {
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error");
+   res.locals.success = req.flash("success");
    next();
 });
 

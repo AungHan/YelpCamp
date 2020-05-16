@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/stylesheets/main.css">
-    <title>Yelp Camps</title>
+    <title>YelpCamp</title>
   </head>
   <body>
   <nav class="navbar navbar-default">
@@ -26,3 +26,14 @@
       </div>
     </div>
   </nav>
+
+  <div class="container">
+    <% if(error && error.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+    <% } if(success && success.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+        <%= success %>
+      </div>
+    <% } %>
